@@ -380,14 +380,18 @@ export default class Client extends EventEmitter {
     }
 
     public sendMessage(data: Message): string {
-        const id = data.id || this.nextId();
-        const msg = {
-            id,
-            originId: id,
-            ...data
-        };
-        this.send('message', msg);
-        return msg.id;
+        if (data.marker?.type == 'received') {
+            return '';
+        } else {
+            const id = data.id || this.nextId();
+            const msg = {
+                id,
+                originId: id,
+                ...data
+            };
+            this.send('message', msg);
+            return msg.id;
+        }
     }
 
     public sendPresence(data: Presence = {}): string {
