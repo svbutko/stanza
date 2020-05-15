@@ -57,6 +57,7 @@ export default class WSConnection extends Duplex implements Transport {
     }
 
     public connect(opts: TransportConfig) {
+        console.log("CONNECT FROM WEBSOCKET");
         this.config = opts;
         this.hasStream = false;
         this.closing = false;
@@ -138,6 +139,9 @@ export default class WSConnection extends Duplex implements Transport {
         if (!output) {
             return;
         }
+
+        console.log("SEND DATA OR NAME: ", dataOrName);
+        console.log("SEND DATA: ", data);
 
         return new Promise<void>((resolve, reject) => {
             this.write(output, 'utf8', err => (err ? reject(err) : resolve()));
